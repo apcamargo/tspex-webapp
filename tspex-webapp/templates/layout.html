@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Fonts CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,700|Nunito:800">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+    <title>Website</title>
+    {% endif %}
+  </head>
+
+  <!-- Flash message -->
+  <header>
+    <div class="container" style="padding: 1.5rem 5rem 0rem 5rem;">
+      {% with messages=get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      {% for category, message in messages %}
+      <div role="alert" class="alert alert-{{category}}">
+        {{message}}
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </div>
+  </header>
+
+  <body>
+
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <!-- Title -->
+        <div style="margin-bottom: 1rem; flex-grow: 1;">
+          <div class="row">
+            <div class="col-6">
+              <h1 class="display-3 text-primary" style="margin-bottom: 0rem">
+                <a href="{{ url_for('index') }}">tspex</a>
+              </h1>
+              <h5 class="text-muted">Tissue-specificity calculator</h5>
+            </div>
+            <div class="col-6 text-right my-auto">
+              <a class="btn btn-primary btn-labeled mr-2" role="button" href="https://apcamargo.github.io/tspex/"><span
+                  class="btn-label"><i class="fas fa-book"></i></span>Documentation</a>
+              <a class="btn btn-dark btn-labeled" role="button" href="https://github.com/apcamargo/tspex/"><span
+                  class="btn-label"><i class="fab fa-github-alt"></i></span>GitHub</a>
+            </div>
+          </div>
+        </div>
+        {% block content %}
+        {% endblock content %}
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container text-center" style="padding: 0">
+        <span class="text-muted">Developed by <a href="https://github.com/apcamargo/"><i class="fa fa-user-astronaut"></i>
+            Antonio Camargo</a> and <a href="https://github.com/Matt-BF/"><i class="fa fa-user-ninja"></i> Mateus
+            Fiamenghi</a> at the <a href="https://www.unicamp.br/unicamp/english"><i class="fa fa-university"></i>
+            University of Campinas</a>.</span>
+      </div>
+    </footer>
+
+    <!-- Bootstrap client-side validation -->
+    <script>
+      // Example starter JavaScript for disabling form submissions if there are invalid fields
+      (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+          // Fetch all the forms we want to apply custom Bootstrap validation styles to
+          var forms = document.getElementsByClassName('needs-validation');
+          // Loop over them and prevent submission
+          var validation = Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add('was-validated');
+            }, false);
+          });
+        }, false);
+      })();
+    </script>
+
+    <!-- Show file name in the input -->
+    <script>
+      $('#file_id').on('change', function () {
+        // get the file name
+        var fileName = $(this).val().split("\\").pop();
+        // replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(fileName);
+      })
+    </script>
+
+    <!-- Client-side file size check -->
+    <script type="text/javascript">
+      $('#file_id').bind('change', function () {
+        if (this.files[0].size > 10 * 1024 * 1024) {
+          alert('The maximum allowed file size is 10 MB.')
+          location.reload();
+        }
+      });
+    </script>
+
+  </body>
+
+</html>

@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<form class="needs-validation" method=post action="{{ url_for('index') }}" enctype=multipart/form-data novalidate
+  style="flex-grow: 100;">
+  <div class="card col-12" style="margin-bottom:1rem;">
+    <div class="card-body">
+      <h5 class="card-title">Use tspex online</h5>
+      <p class="card-text">Upload an expression matrix file (<a
+          href="{{ url_for('static', filename='example.tsv') }}">example</a>), select a tissue-specificity metric
+        and choose whether the expression values should be log-transformed. After submitting your data, you will
+        be redirected to a page where you can view and download your results as soon as they are ready.</p>
+    </div>
+    <!-- File upload -->
+    <div class="form-group row files card-body mt-0 pt-0 mb-0 pb-0">
+      <div class="col-12">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="file_id" name="file" required>
+          <label class="custom-file-label" for="file_id">Choose a TSV, CSV or Excel file (Max.: 10 MB)</label>
+          <div class="invalid-feedback">
+            Please select a file.
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Selector + Button -->
+    <div class="form-group row card-body mt-0 pt-3 mb-0 pb-0">
+      <!-- Selector -->
+      <div class="col-9">
+        <select class="custom-select" id="selector_id" name="selector" required>
+          <option disabled selected>Select a tissue-specificity metric</option>
+          {% for method in methodlist.keys() %}
+          <option value="{{method}}">{{method}}</option>
+          {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+          Please select a tissue-specificity metric. If you are unsure, use "Tau".
+        </div>
+      </div>
+      <!-- Button -->
+      <div class="col-3">
+        <button type="submit" value=Upload class="btn btn-primary btn-block">Submit</button>
+      </div>
+    </div>
+    <!-- Log checkbox -->
+    <div class="form-group row card-body pt-1 pb-2">
+      <div class="col-8">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" class="custom-control-input" name="checklog" id="checklog_id">
+          <label class="custom-control-label" for="checklog_id">Log-transform expression values</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- Installation card -->
+<div class="card col-12" style="margin-bottom:1rem">
+  <div class="card-body">
+    <h5 class="card-title">Use tspex locally</h5>
+    <p class="card-text">tspex is available as a package for local installation. It provides a command-line
+      interface and a Python API which includes additional options and visualization functions. Check our
+      <a href="https://apcamargo.github.io/tspex/">documentation</a> for details on how to install and
+      perform tissue-specificity analysis with a local installation of tspex.</p>
+  </div>
+</div>
+<!-- Citation card -->
+<div class="card bg-light col-12" style="margin-bottom:1rem">
+  <div class="card-body">
+    <h5 class="card-title">Cite tspex</h5>
+    <p class="card-text" style="margin: 0px;">"tspex: a tissue-specificity calculator for gene expression data".</p>
+    <p class="card-text text-muted">Antonio P. Camargo, Adrielle A. Vasconcelos, Mateus B. Fiamenghi, Gonçalo A. G.
+      Pereira, Marcelo F. Carazzolle &ndash; <em>BioRxiv</em> (2019).</p>
+    <a class="btn btn-outline-primary btn-sm mr-2" role="button"
+      href="https://www.biorxiv.org/content/10.1101/620880v1.abstract/">Go to article</a>
+  </div>
+</div>
+
+{% endblock content %}
