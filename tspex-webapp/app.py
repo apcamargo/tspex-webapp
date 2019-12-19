@@ -58,11 +58,11 @@ def index():
             # Get the file extension and open it in pandas
             input_extension = input_file_path.rsplit('.', 1)[1].lower()
             if input_extension == 'tsv':
-                data = pd.read_csv(input_file_path, sep='\t', index_col=0)
+                data = pd.read_csv(input_file_path, sep='\t', thousands=',', index_col=0)
             elif input_extension == 'csv':
-                data = pd.read_csv(input_file_path, index_col=0)
+                data = pd.read_csv(input_file_path, thousands=',', index_col=0)
             elif input_extension in ['xls', 'xlsx']:
-                data = pd.read_excel(input_file_path, index_col=0)
+                data = pd.read_excel(input_file_path, thousands=',', index_col=0)
             # Check if there are duplicated gene names
             if data.index.duplicated().any():
                 flash(
