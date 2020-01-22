@@ -2,7 +2,15 @@ import os
 import uuid
 
 import pandas as pd
-from flask import Flask, flash, redirect, render_template, request, send_from_directory, url_for
+from flask import (
+    Flask,
+    flash,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+    url_for,
+)
 from werkzeug.utils import secure_filename
 from worker import celery
 
@@ -51,7 +59,9 @@ def index():
             filename = secure_filename(input_file.filename)
             # Add 5 random characters to the file name and save it to the uploads directory
             filename = '{}_{}{}'.format(
-                os.path.splitext(filename)[0], uuid.uuid4().hex[0:5], os.path.splitext(filename)[1]
+                os.path.splitext(filename)[0],
+                uuid.uuid4().hex[0:5],
+                os.path.splitext(filename)[1],
             )
             input_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             input_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
@@ -81,7 +91,9 @@ def index():
             output_file_path = os.path.join(app.config['UPLOAD_FOLDER'], output_file)
             # Start a Celery task and send user to the results page
             celery.send_task(
-                'tasks.start_tspex', args=[data_json, output_file_path, method, log], kwargs={}
+                'tasks.start_tspex',
+                args=[data_json, output_file_path, method, log],
+                kwargs={},
             )
             return submission_complete(output_file)
     return render_template('index.html', methodlist=methodlist, title=TITLE)
@@ -100,6 +112,7 @@ def results_page(output_file_base):
     output_file_path = os.path.join(app.config['UPLOAD_FOLDER'], output_file)
     if os.path.exists(output_file_path):
         dataframe = pd.read_csv(output_file_path, sep='\t', index_col=None)
+        data_size = dataframe.shape[0]
         columns = list(dataframe.columns)
         columns[0] = 'ID'
         dataframe.columns = columns
@@ -111,7 +124,11 @@ def results_page(output_file_base):
             classes=['table', 'table-striped', 'table-hover', 'nowrap'],
         )
         return render_template(
-            'results.html', output_file=output_file, dataframe_html=dataframe_html, title=TITLE
+            'results.html',
+            output_file=output_file,
+            data_size=data_size,
+            dataframe_html=dataframe_html,
+            title=TITLE,
         )
     else:
         return render_template('missing.html', title=TITLE)

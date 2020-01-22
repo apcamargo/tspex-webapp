@@ -6,28 +6,37 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-9">
+                        {% if data_size <= 5000 %}
                         <h5 class="card-title">View and download your results</h5>
+                        {% else %}
+                        <h5 class="card-title">Download your results</h5>
+                        {% endif %}
                     </div>
                     <div class="col-3">
                         <a class="btn btn-primary btn-block" role="button"
                             href="{{ url_for('uploaded_file', output_file=output_file) }}">Download</a>
                     </div>
                 </div>
+                {% if data_size <= 5000 %}
                 <p class="card-text">{{ dataframe_html | safe }}</p>
+                {% else %}
+                <p class="card-text pt-2">To view the results in your browser, please upload a expression
+                    matrix containing at most 5,000 genes.</p>
+                {% endif %}
             </div>
         </div>
 
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css" />
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
 
         <script>
-          $.fn.DataTable.ext.pager.numbers_length = 5;
-          $(document).ready(function() {
-            $('#dataframe-id').DataTable({
-              "order": [],
-              "scrollX": true
-            });
-          })
+            $.fn.DataTable.ext.pager.numbers_length = 5;
+            $(document).ready(function () {
+                $('#dataframe-id').DataTable({
+                    "order": [],
+                    "scrollX": true
+                });
+            })
         </script>
 
 {% endblock content %}
