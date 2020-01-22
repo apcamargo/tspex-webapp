@@ -63,6 +63,8 @@ def index():
                 data = pd.read_csv(input_file_path, thousands=',', index_col=0)
             elif input_extension in ['xls', 'xlsx']:
                 data = pd.read_excel(input_file_path, thousands=',', index_col=0)
+            # Drop columns where all values are NAs
+            data = data.dropna(axis=1, how='all')
             # Check if there are duplicated gene names
             if data.index.duplicated().any():
                 flash(
