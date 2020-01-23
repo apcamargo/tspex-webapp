@@ -20,8 +20,9 @@
                 {% if data_size <= 5000 %}
                 <p class="card-text">{{ dataframe_html | safe }}</p>
                 {% else %}
-                <p class="card-text pt-2">To view the results in your browser, please upload a expression
-                    matrix containing at most 5,000 genes.</p>
+                <div class="alert alert-warning mt-2" role="alert">
+                    To view the results in your browser, upload a expression matrix containing at most 5,000 genes.
+                </div>
                 {% endif %}
             </div>
         </div>
@@ -30,13 +31,13 @@
         <script src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
 
         <script>
-            $.fn.DataTable.ext.pager.numbers_length = 5;
-            $(document).ready(function () {
-                $('#dataframe-id').DataTable({
-                    "order": [],
-                    "scrollX": true
-                });
-            })
+          $.fn.DataTable.ext.pager.numbers_length = 5;
+          $(document).ready(function () {
+            $('#dataframe-id').DataTable({
+              "order": [],
+              "scrollX": true
+            });
+          })
         </script>
 
 {% endblock content %}
