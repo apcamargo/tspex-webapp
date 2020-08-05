@@ -1,6 +1,16 @@
 {% extends "layout.html" %}
 {% block content %}
 
+<!-- About card -->
+<div class="card col-12" style="margin-bottom:1rem">
+  <div class="card-body">
+    <h5 class="card-title">About</h5>
+    <p class="card-text">tspex is a tool that allow easy computation of a variety of tissue-specificity metrics from
+      gene expression data.</p>
+  </div>
+</div>
+
+<!-- File selection + Button -->
 <form class="needs-validation" method=post action="{{ url_for('index') }}" enctype=multipart/form-data novalidate
   style="flex-grow: 100;">
   <div class="card col-12" style="margin-bottom:1rem;">
@@ -56,6 +66,7 @@
     </div>
   </div>
 </form>
+
 <!-- Installation card -->
 <div class="card col-12" style="margin-bottom:1rem">
   <div class="card-body">
@@ -66,13 +77,18 @@
       perform tissue-specificity analysis with a local installation of tspex.</p>
   </div>
 </div>
+
 <!-- Citation card -->
 <div class="card bg-light col-12" style="margin-bottom:1rem">
   <div class="card-body">
-    <h5 class="card-title">Cite tspex</h5>
-    <p class="card-text" style="margin: 0px;">"tspex: tissue-specificity calculator".</p>
-    <p class="card-text text-muted">Antonio P. Camargo &ndash; <a
-        href="https://doi.org/10.5281/zenodo.3558708">doi:10.5281/zenodo.3558708</a> (2019).</p>
+    <h5 class="card-title">Cite RNAsamba</h5>
+    <p class="card-text" style="margin: 0px;">"RNAsamba: neural network-based assessment of the protein-coding
+      potential of RNA sequences".</p>
+    <p class="card-text text-muted">Camargo, A. P., Vasconcelos, A. A., Fiamenghi, M. B., Pereira, G. A. G. &
+      Carazzolle, M. F. &ndash;
+      <em>Preprint available at Research Square</em> (2020).</p>
+    <a class="btn btn-outline-primary btn-sm mr-2" role="button"
+      href="https://www.researchsquare.com/article/rs-51998/v1">Go to article</a>
   </div>
 </div>
 
